@@ -1,0 +1,16 @@
+{
+  "name": "pcc-ens",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ pcc-ens",
+    "create-local": "graph create --node http://localhost:8020/ pcc-ens",
+    "remove-local": "graph remove --node http://localhost:8020/ pcc-ens",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 pcc-ens"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.29.1",
+    "@graphprotocol/graph-ts": "0.26.0"
+  }
+}
