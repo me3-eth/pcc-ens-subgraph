@@ -1,35 +1,19 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import {
   EnsMapper,
-  OwnershipTransferred,
-  RegisterSubdomain,
-  TextChanged
+  TextChanged as TextChangedEvent
 } from "../generated/EnsMapper/EnsMapper"
-import { ExampleEntity } from "../generated/schema"
+import { TextChanged as TextChangedEntity } from "../generated/schema"
 
-export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
-
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
-
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+export function handleTextChanged(event: TextChangedEvent): void {
+  let entity = new TextChangedEntity(event.block.number.toString().concat('-').concat(event.logIndex.toString()))
 
   // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  // Entity fields can be set based on event parameters
-  entity.previousOwner = event.params.previousOwner
-  entity.newOwner = event.params.newOwner
-
-  // Entities can be written to the store with `.save()`
+  entity.blockNumber = event.block.number.toI32()
+  entity.transactionID = event.transaction.hash
+  entity.key = event.params.key
   entity.save()
+
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
@@ -69,7 +53,3 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   // - contract.tokenHashmap(...)
   // - contract.useEIP155(...)
 }
-
-export function handleRegisterSubdomain(event: RegisterSubdomain): void {}
-
-export function handleTextChanged(event: TextChanged): void {}

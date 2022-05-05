@@ -1,6 +1,6 @@
-type ExampleEntity @entity {
+type TextChanged @entity {
   id: ID!
-  count: BigInt!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
+  blockNumber: Int!
+  transactionID: Bytes!
+  key: String!
 }
