@@ -12,6 +12,11 @@ export function handleTextChanged(event: TextChangedEvent): void {
   entity.blockNumber = event.block.number.toI32()
   entity.transactionID = event.transaction.hash
   entity.key = event.params.key
+  entity.node = event.params.node
+
+  let contract = EnsMapper.bind(event.address)
+  entity.name = contract.hashToDomainMap(event.params.node).concat('.pcc.eth')
+
   entity.save()
 
 

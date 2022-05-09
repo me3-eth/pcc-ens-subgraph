@@ -3,4 +3,6 @@ type TextChanged @entity {
   blockNumber: Int!
   transactionID: Bytes!
   key: String!
+  node: Bytes!
+  name: String!
 }
